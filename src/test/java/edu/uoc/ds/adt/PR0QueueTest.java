@@ -2,7 +2,7 @@ package edu.uoc.ds.adt;
 
 import org.junit.After;
 import org.junit.Before;
-
+import java.time.LocalDate;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -12,9 +12,10 @@ public class PR0QueueTest {
 
 
     private void fillQueue() {
-        for (char c = '0'; c < '9'; c++) {
-            pr0q.add(Character.valueOf(c));
-
+        LocalDate initialDate = LocalDate.of(2023, 9, 28);
+        int offset = 2;
+        for (int i = 0; i < pr0q.CAPACITY; i++) {
+            pr0q.add(initialDate.plusDays(i * offset));
         }
     }
     @Before
@@ -33,10 +34,8 @@ public class PR0QueueTest {
 
     @org.junit.Test
     public void queueTest() {
-        assertEquals(this.pr0q.CAPACITY-1, this.pr0q.getQueue().size());
-
-        assertEquals(this.pr0q.clearFullQueue(), new String("0 1 2 3 4 5 6 7 8 "));
-
+        assertEquals(this.pr0q.CAPACITY, this.pr0q.getQueue().size());
+        assertEquals("09/28, 09/30, 10/02, 10/04, 10/06, 10/08, 10/10, 10/12, 10/14, 10/16",this.pr0q.clearFullQueue());
         assertEquals(0, this.pr0q.getQueue().size());
     }
 

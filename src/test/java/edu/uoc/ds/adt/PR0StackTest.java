@@ -2,42 +2,42 @@ package edu.uoc.ds.adt;
 
 import org.junit.After;
 import org.junit.Before;
-
+import java.time.LocalDate;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class PR0StackTest {
 
-    PR0Stack pr0q;
+    PR0Stack pr0Stack;
 
     private void fillStack() {
-        for (char c = '0'; c < '9'; c++) {
-            pr0q.push(Character.valueOf(c));
+        LocalDate initialDate = LocalDate.of(2023, 9, 28);
+        int offset = 2;
+
+        for (int i = 0; i < pr0Stack.CAPACITY; i++) {
+            pr0Stack.push(initialDate.plusDays(i * offset));
         }
     }
 
     @Before
     public void setUp() {
-        this.pr0q = new PR0Stack();
+        this.pr0Stack = new PR0Stack();
 
-        assertNotNull(this.pr0q.getStack());
+        assertNotNull(this.pr0Stack.getStack());
         this.fillStack();
-
     }
 
     @After
     public void release() {
-        this.pr0q = null;
+        this.pr0Stack = null;
     }
-
 
     @org.junit.Test
     public void stackTest() {
+        assertEquals(this.pr0Stack.CAPACITY, this.pr0Stack.getStack().size());
 
-        assertEquals(this.pr0q.CAPACITY-1, this.pr0q.getStack().size());
+        assertEquals("10/16, 10/14, 10/12, 10/10, 10/08, 10/06, 10/04, 10/02, 09/30, 09/28", this.pr0Stack.clearAllStack());
 
-        assertEquals(this.pr0q.clearAllStack(), new String("8 7 6 5 4 3 2 1 0 "));
-
-        assertEquals(0, this.pr0q.getStack().size());
+        assertEquals(0, this.pr0Stack.getStack().size());
     }
 }
